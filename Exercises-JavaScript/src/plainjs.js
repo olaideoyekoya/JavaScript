@@ -12,11 +12,11 @@
  *       3.2 second, allow any well formed equation using the given operators with the addition of parentheses
  *       
  */
-var Equation=function() {
+var Equation = function() {
     this.operand1 = null;
     this.operand2 = null;
     this.operator = null;
-    this.answer = null;
+    this.answer   = null;
 };
 
 Equation.prototype.compute = function() {
@@ -41,9 +41,11 @@ Equation.prototype.compute = function() {
 };
 
 Equation.prototype.updateOperand = function(event) {
-    if (event.currentTarget.id === '#operand1')
+	if (event.currentTarget.id === 'operand1')
         this.operand1 = parseFloat($(event.currentTarget).val());
-    else this.operand2 = parseFloat($(event.currentTarget).val());
+    else 
+		this.operand2 = parseFloat($(event.currentTarget).val());
+	this.operator = $("#operator option:selected").text();		
     this.compute();
 };
 
@@ -52,11 +54,10 @@ Equation.prototype.updateOperator = function(event) {
     this.compute();
 };
 
-(function() {
+window.onload = function() {
     // WARNING: don't treat equation as a global variable in any changes you make
     var equation = new Equation();
-    
-    $('#operator').change(equation.updateOperator);
-    
-    $('.operand').change(equation.updateOperand);
-})();
+	
+    $('#operator').change(function(e) { equation.updateOperator(e); });
+	$('.operand').change(function(e) { equation.updateOperand(e); });
+};
